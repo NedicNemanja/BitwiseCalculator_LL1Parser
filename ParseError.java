@@ -14,7 +14,8 @@ public class ParseError extends Exception {
 
   public static void read_till_newline(){
     try{
-      while(System.in.read() != '\n');
+      if(System.in.available()>0)
+        while(System.in.read() != '\n');
     }
     catch(IOException e){
       System.out.println(e.getMessage());

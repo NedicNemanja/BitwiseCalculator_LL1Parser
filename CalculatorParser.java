@@ -16,6 +16,7 @@ public class CalculatorParser {
   */
   private void lookahead() throws IOException, ParseError{
     next_char = stream.read();
+    //System.out.print((char)next_char);
     //check that the symbol you read is valid
     if(next_char!='^' && next_char!='&' && next_char!='(' &&next_char!=')' && !is_digit(next_char) && next_char!='\n' && next_char!=-1) {
        throw new ParseError("Invalid symbol: \""+(char)next_char+'"');
@@ -35,6 +36,7 @@ public class CalculatorParser {
   }
 
   private int expr() throws IOException, ParseError {
+    //System.out.print("expr->");
     if(next_char == '('){
       return expr2(term());
     }
@@ -45,6 +47,7 @@ public class CalculatorParser {
   }
 
   private int expr2(int interim) throws IOException, ParseError {
+    //System.out.print("expr2->");
     if(next_char == '^'){
       lookahead();  //consume ^
       return expr2(interim ^ term());
@@ -59,6 +62,7 @@ public class CalculatorParser {
   }
 
   private int term() throws IOException, ParseError {
+    //System.out.print("term->");
     if(next_char == '('){
       return term2(num());
     }
@@ -69,6 +73,7 @@ public class CalculatorParser {
   }
 
   private int term2(int interim) throws IOException, ParseError {
+    //System.out.print("term2->");
     if(next_char == '^'){
       return interim;
     }
@@ -85,15 +90,19 @@ public class CalculatorParser {
     if(next_char == '('){
       lookahead(); //consume: (
       int value = expr();
-      if(next_char == ')')
+      if(next_char == ')'){
         lookahead(); //consume: )
-      else
+      }
+      else{
         throw new ParseError("expected ) instead of \""+(char)next_char+'"');
+      }
       return value;
     }
     if(is_digit(next_char)){
+      //System.out.print("num->"+(char)next_char+'\n');
+      int temp = next_char;
       lookahead();  //consume: 0|1|2|...|9
-      return next_char;
+      return temp-'0';
     }
     throw new ParseError("no rule for num at \""+(char)next_char+'"');
   }
