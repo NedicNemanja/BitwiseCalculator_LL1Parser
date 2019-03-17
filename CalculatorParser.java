@@ -108,13 +108,21 @@ public class CalculatorParser {
   }
 
   public static void main(String[] args){
-    //for testing run with java CalculatorParser  test
+    //for testing run with "$java CalculatorParser test"  *********************
     if(args.length==1){
-      ParserTest test = new ParserTest();
-      test.all_tests();
-      return;
+      try{
+        ParserTest test = new ParserTest();
+        test.all_tests();
+        return;
+      }
+      catch(ParseError e){
+        System.out.println(e.getMessage());
+      }
+      catch(IOException e){
+        System.out.println(e.getMessage());
+      }
     }
-    //normal execution with System.in
+    //normal execution with System.in   ***************************************
     do{
       System.out.print("\nType expression (or 'q' to exit): ");
       try{

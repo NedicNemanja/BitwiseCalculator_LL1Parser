@@ -3,7 +3,7 @@ import java.io.IOException;
 public class ParseError extends Exception {
   private String message;
 
-  public ParseError(String m){
+  public ParseError(String m) throws IOException{
     this.message = m;
     read_till_newline();
   }
@@ -12,13 +12,8 @@ public class ParseError extends Exception {
     return "\tParseError:"+message;
   }
 
-  public static void read_till_newline(){
-    try{
-      if(System.in.available()>0)
-        while(System.in.read() != '\n');
-    }
-    catch(IOException e){
-      System.out.println(e.getMessage());
-    }
+  public static void read_till_newline() throws IOException{
+    if(System.in.available()>0)
+      while(System.in.read() != '\n');
   }
 }
