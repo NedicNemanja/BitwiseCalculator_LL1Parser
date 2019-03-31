@@ -4,7 +4,7 @@ import java.io.IOException;
 public class CalculatorParser {
 
   private InputStream stream;
-  public int next_char;
+  private int next_char;
 
   public CalculatorParser(InputStream in) throws IOException, ParseError {
     this.stream = in;
@@ -16,7 +16,6 @@ public class CalculatorParser {
   */
   private void lookahead() throws IOException, ParseError{
     next_char = stream.read();
-    //System.out.print((char)next_char);
     //check that the symbol you read is valid
     if(next_char!='^' && next_char!='&' && next_char!='(' &&next_char!=')' && !is_digit(next_char) && next_char!='\n' && next_char!=-1) {
        throw new ParseError("Invalid symbol: \""+(char)next_char+'"');
@@ -109,6 +108,7 @@ public class CalculatorParser {
 
   public static void main(String[] args){
     //for testing run with "$java CalculatorParser test"  *********************
+    System.out.print("To run tests run with: java CalculatorParser test");
     if(args.length==1){
       try{
         ParserTest test = new ParserTest();
